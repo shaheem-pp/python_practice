@@ -1,4 +1,11 @@
-class my_class:
+# A teacher can add details of students of a class where each student have name, email & age.
+# Teacher can add mark of Cs, Math & Eng. Also teacher want to add fee for each students.
+# And at last teacher want to show all details.
+
+class Sudent:
+
+    # in this function we gets data of class name and strength. this strength can be used later.
+    #   when teacher want to enter details of each student
     def __init__(self, class_name, strength_of_students):
         self.class_name = class_name
         self.strength_of_students = strength_of_students
@@ -8,6 +15,7 @@ class my_class:
         print(welcome_message)
         print(length_welcome_message * "*")
 
+    # after getting class and strength, ask teacher what he/she wanted to do
     def ask_what_to_do(self):
         ask = "Enter Option number to do a task"
         length_ask = len(ask)
@@ -30,8 +38,8 @@ class my_class:
             print("Wrong Input :(")
 
     def student_details(self):
-        print("Selected option is: 1) Enter Student Details")
-
+        while self.strength_of_students != 0:
+            print("Enter ")
 
     def student_mark(self):
         print()
@@ -46,4 +54,4 @@ class my_class:
 class_name = input("Enter your class name: ")
 strength_of_students = int(input("Enter Number of Students: "))
 
-my_class(class_name, strength_of_students)
+Sudent(class_name, strength_of_students)
