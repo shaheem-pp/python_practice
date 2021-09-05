@@ -49,15 +49,15 @@ class Student:
             student_detail["email"] = input("Enter {}st Student Email".format(i + 1)).lower()
             student_list.append(student_detail)
         for i in student_list:
-            print("Student Name ->",student_detail["student_name"])
-            print("Student Age ->",student_detail["Age"])
-            print("Student Email ->",student_detail["email"])
+            print("Student Name ->", student_detail["student_name"])
+            print("Student Age ->", student_detail["Age"])
+            print("Student Email ->", student_detail["email"])
 
-    def student_mark(self):
-        print()
-
-    def fee_details(self):
-        print()
+    # def student_mark(self):
+    #     print()
+    #
+    # def fee_details(self):
+    #     print()
 
     def print_details(self):
         print()
