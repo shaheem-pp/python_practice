@@ -6,13 +6,13 @@ dictionary = {
     "email": ""
 }
 for i in range(a):
+    dictionary = dict()
     dictionary["student_name"] = input("enter student name: ")
     dictionary["Age"] = input("enter student age: ")
     dictionary["email"] = (dictionary["student_name"].replace(" ", "") + dictionary["Age"] + "@mycampus.com").lower()
     list.append(dictionary)
 
 print(list)
-
 #
 # list = [
 #     {

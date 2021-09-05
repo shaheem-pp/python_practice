@@ -43,11 +43,15 @@ class Student:
             "email": ""
         }
         for i in range(strength_of_students):
+            student_detail = dict()
             student_detail["student_name"] = input("enter {}st student name: ".format(i + 1))
             student_detail["Age"] = input("enter {}st student age: ".format(i + 1))
             student_detail["email"] = input("Enter {}st Student Email".format(i + 1)).lower()
-            student_list[i] = student_list.append(student_detail)
-        print(student_list)
+            student_list.append(student_detail)
+        for i in student_list:
+            print("Student Name ->",student_detail["student_name"])
+            print("Student Age ->",student_detail["Age"])
+            print("Student Email ->",student_detail["email"])
 
     def student_mark(self):
         print()
