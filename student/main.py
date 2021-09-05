@@ -2,7 +2,13 @@
 # Teacher can add mark of Cs, Math & Eng. Also teacher want to add fee for each students.
 # And at last teacher want to show all details.
 
-class Sudent:
+class Student:
+    student_list = []
+    student_detail = {
+        "student_name": "",
+        "Age": "",
+        "email": ""
+    }
 
     # in this function we gets data of class name and strength. this strength can be used later.
     #   when teacher want to enter details of each student
@@ -38,8 +44,24 @@ class Sudent:
             print("Wrong Input :(")
 
     def student_details(self):
+        student_list = []
+        student_detail = {
+            "student_name": "",
+            "Age": "",
+            "email": ""
+        }
         while self.strength_of_students != 0:
-            print("Enter ")
+            print("Enter Detail of Student 1")
+            student_detail["student_name"] = input("enter student name: ")
+            student_detail["Age"] = input("enter student age: ")
+            student_detail["email"] = (student_detail["student_name"].replace(" ", "") + student_detail[
+                "Age"] + "@mycampus.com").lower()
+            student_list.append(student_detail)
+
+            self.strength_of_students = self.strength_of_students - 1
+
+        for i in student_list:
+            print(student_list)
 
     def student_mark(self):
         print()
@@ -54,4 +76,5 @@ class Sudent:
 class_name = input("Enter your class name: ")
 strength_of_students = int(input("Enter Number of Students: "))
 
-Sudent(class_name, strength_of_students)
+s1 = Student(class_name, strength_of_students)
+s1.student_details()
