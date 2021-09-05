@@ -3,12 +3,6 @@
 # And at last teacher want to show all details.
 
 class Student:
-    student_list = []
-    student_detail = {
-        "student_name": "",
-        "Age": "",
-        "email": ""
-    }
 
     # in this function we gets data of class name and strength. this strength can be used later.
     #   when teacher want to enter details of each student
@@ -50,18 +44,12 @@ class Student:
             "Age": "",
             "email": ""
         }
-        while self.strength_of_students != 0:
-            print("Enter Detail of Student 1")
-            student_detail["student_name"] = input("enter student name: ")
-            student_detail["Age"] = input("enter student age: ")
-            student_detail["email"] = (student_detail["student_name"].replace(" ", "") + student_detail[
-                "Age"] + "@mycampus.com").lower()
-            student_list.append(student_detail)
-
-            self.strength_of_students = self.strength_of_students - 1
-
-        for i in student_list:
-            print(student_list)
+        for i in range(strength_of_students):
+            student_detail["student_name"] = input("enter {}st student name: ".format(i + 1))
+            student_detail["Age"] = input("enter {}st student age: ".format(i + 1))
+            student_detail["email"] = input("Enter {}st Student Email".format(i + 1)).lower()
+            student_list[i] = student_list.append(student_detail)
+        print(student_list)
 
     def student_mark(self):
         print()

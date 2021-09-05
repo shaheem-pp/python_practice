@@ -1,15 +1,14 @@
-a = 5
+a = 2
 list = []
 dictionary = {
     "student_name": "",
     "Age": "",
     "email": ""
 }
-for i in range(0, 5):
+for i in range(a):
     dictionary["student_name"] = input("enter student name: ")
     dictionary["Age"] = input("enter student age: ")
     dictionary["email"] = (dictionary["student_name"].replace(" ", "") + dictionary["Age"] + "@mycampus.com").lower()
-
     list.append(dictionary)
 
 print(list)
