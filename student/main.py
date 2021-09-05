@@ -1,9 +1,7 @@
 # A teacher can add details of students of a class where each student have name, email & age.
 # Teacher can add mark of Cs, Math & Eng. Also teacher want to add fee for each students.
 # And at last teacher want to show all details.
-
 class Student:
-
     # in this function we gets data of class name and strength. this strength can be used later.
     #   when teacher want to enter details of each student
     def __init__(self, class_name, strength_of_students):
@@ -63,6 +61,5 @@ class Student:
 
 class_name = input("Enter your class name: ")
 strength_of_students = int(input("Enter Number of Students: "))
-
 s1 = Student(class_name, strength_of_students)
 s1.student_details()
