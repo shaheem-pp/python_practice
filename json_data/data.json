@@ -1,0 +1,45 @@
+{
+  "status": "success",
+  "message": "cart list retrieved",
+  "cart_count": 1,
+  "cart_list": {
+    "cart": {
+      "id": 17,
+      "qr_code": "/media/qr_code/qr1669616149.3396301.png",
+      "user": {
+        "id": 3,
+        "name": "Naruto Uzumaki",
+        "phone": "919876543210"
+      },
+      "vendor": {
+        "id": 12,
+        "title": "Max",
+        "logo": "/static/image-404/photo-unavailable.png",
+        "image": "/static/image-404/photo-unavailable.png",
+        "vendor_category": {
+          "id": 1,
+          "title": "mall"
+        },
+        "point": "SRID=4326;POINT (76.311371 10.023286)",
+        "location": null,
+        "phone": null
+      }
+    },
+    "open_status": {
+      "is_opened": false,
+      "opening_time": "closed",
+      "closing_time": "closed"
+    },
+    "products": [
+      {
+        "product": {
+          "id": 6,
+          "image": "/media/product/f1109164213nikcra.png",
+          "title": "leaf shirt",
+          "stock": 10
+        },
+        "quantity": 10
+      }
+    ]
+  }
+}
