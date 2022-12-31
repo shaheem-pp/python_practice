@@ -39,4 +39,4 @@ while loop == 1:
         print("Not Valid")
 
     if option == 1:
-        add(num1=get_num(), num2=get_num())
+        add(num1 = get_num(), num2 = get_num())

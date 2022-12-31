@@ -25,8 +25,11 @@ def distance(lat1, lat2, lon1, lon2):
 
 
 # driver code
-lat1 = 10
-lat2 = 20
-lon1 = 76
-lon2 = 86
-print(distance(lat1, lat2, lon1, lon2), "K.M")
+lat1 = 11.1360
+lon1 = 75.8272
+
+lat2 = 33.2778
+lon2 = 75.3412
+
+dist = round(float(distance(lat1, lat2, lon1, lon2)), 2)
+print(dist, "KM")

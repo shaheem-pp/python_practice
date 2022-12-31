@@ -1,0 +1,2675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+</head>
+<body data-target="#sidebar">
+<nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
+   <span class="navbar-brand mb-0">
+    <a class="toggle-sidebar" data-toggle="collapse" href="#sidebar">
+     <i class="fa fa-navicon fa-lg">
+     </i>
+    </a>
+    <a class="navbar-brand" href="/">
+     Web Forefront
+    </a>
+   </span>
+    <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+    <span class="navbar-toggler-icon">
+    </span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link active" href="/consulting.html">
+                    Aboute the author &amp; Consulting
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a aria-expanded="false" aria-haspopup="true" class="nav-link active dropdown-toggle" data-toggle="dropdown" href="#" id="navbarDropdownMenuLink">
+                    Writing
+                    <b class="caret">
+                    </b>
+                </a>
+                <div aria-labelledby="navbarDropdownMenuLink" class="dropdown-menu">
+                    <a class="dropdown-item" href="/about/danielrubio/articles.html">
+                        All books &amp; articles
+                    </a>
+                    <a class="dropdown-item" href="/django/index.html">
+                        Beginning Django
+                    </a>
+                    <a class="dropdown-item" href="/performance/index.html">
+                        Web performance and scalability essays (2005)
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <form action="//www.google.com" class="form-inline my-2 my-lg-0" id="cse-search-box">
+            <input name="cx" type="hidden" value="partner-pub-4639088530133416:3689263939"/>
+            <input name="ie" type="hidden" value="UTF-8"/>
+            <input name="q" size="20" type="text"/>
+            <button class="btn-sm btn-outline-primary my-2 my-sm-0" name="sa" type="submit" value="Search">
+                Search
+            </button>
+        </form>
+        <script src="//www.google.com/coop/cse/brand?form=cse-search-box&amp;lang=en" type="text/javascript">
+        </script>
+    </div>
+</nav>
+<main class="col-12 col-md-9 col-md-push-9 ml-auto p-l-3 p-t-3" id="content" style="padding-top:5rem;">
+    <div class="row">
+    </div>
+    <h1>
+        Django form field types: Widgets, options and validations
+    </h1>
+    <p class="card-text text-justify">
+        Because of the uncontrolled
+        nature of the Internet -- with its many types of devices, browsers
+        and user experience levels -- it creates all kinds of demands on
+        web forms regarding the types of data they must handle, as well as
+        endless variations of how data must be sanitized to comply with the
+        original purpose of a web form.
+    </p>
+    <p class="card-text text-justify">
+        When you create web forms for
+        Django applications you rely on Django form classes, which are
+        composed of form fields. Each Django form field is important
+        because it dictates a small piece of functionality that eventually
+        composes the bulk of a web form's overall behavior.
+    </p>
+    <p class="card-text text-justify">
+        Django form fields define two
+        types of functionality, a form field's HTML markup and its
+        server-side validation facilities. For example, a Django form field
+        translates into the actual HTML form markup (e.g. an
+        <code>
+            &lt;input&gt;
+        </code>
+        ,
+        <code>
+            &lt;select&gt;
+        </code>
+        or
+        <code>
+            &lt;textarea&gt;
+        </code>
+        tag), the HTML markup attributes
+        (e.g. length, whether a field can be left blank or if a field must
+        be disabled), as well as the necessary hooks to easily perform
+        server-side validation on a form field's data.
+    </p>
+    <p class="card-text text-justify">
+        Django form fields define these
+        two types of web form functionality out of necessity. Although
+        browsers have progressed tremendously with technologies like HTML5
+        to provide out of the box form field validation through the HTML
+        markup itself -- without JavaScript -- a browser is still in full
+        control of an end user that with sufficient knowledge can bypass
+        and feed whatever data he wants to a form. Therefore, it's standard
+        practice to further inspect form field data once it's submitted by
+        users to see if it complies with a form's rules, a process that's
+        made very easy thanks to the use of Django form fields.
+    </p>
+    <p class="card-text text-justify">
+        Table 6-2 illustrates the various
+        Django forms fields, including: their type, the HTML they produce,
+        their default widget and their validation behavior.
+    </p>
+    <a id="table-6-2">
+    </a>
+    <h4>
+        Table 6-2. Django form field types, generated HTML, default widget and validation behavior
+    </h4>
+    <table class="table table-responsive text-justify">
+        <tr>
+            <th>
+                <b>
+                    Field type
+                </b>
+            </th>
+            <th>
+                <b>
+                    Django form field type
+                </b>
+            </th>
+            <th>
+                <b>
+                    HTML output
+                </b>
+            </th>
+            <th>
+                <b>
+                    Default Django widget
+                </b>
+            </th>
+            <th>
+                <b>
+                    Validation behavior
+                </b>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Boolean
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.BooleanField()
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type='checkbox'
+...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.CheckboxInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Generates HTML checkbox input
+                    markup to obtain a boolean True or False value; returns False when
+                    the checkbox is unchecked, True when the checkbox is checked.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Boolean
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.NullBooleanField()
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;select&gt;
+  &lt;option value="1" selected="selected"&gt;
+     Unknown
+  &lt;/option&gt;
+  &lt;option value="2"&gt;
+     Yes
+  &lt;/option&gt;
+  &lt;option value="3"&gt;
+     No
+  &lt;/option&gt;
+  &lt;/select&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.NullBooleanSelect()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Works just like BooleanField but
+                    also allows "Unknown" value; returns None when the Unknown(1) value
+                    is selected, True when the Yes(2) value is selected and False when
+                    the No(3) value is selected.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Text
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.CharField()
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type="text" ...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.TextInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Generates HTML text input
+                    markup.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Text (Specialized)
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.EmailField()
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type="email"
+...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.EmailInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Generates HTML email input
+                    markup. Note this HTML5 markup is for client-side email validation
+                    and only works if a browser supports HTML5. If a browser doesn't
+                    support HTML5, then it treats this markup as a regular text input.
+                    Django server-side form validation is done for email irrespective
+                    of HTML5 support.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Text (Specialized)
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.GenericIPAddressField()
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type="text" ...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.TextInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Works just like CharField, but
+                    server-side Django validates the (text) value can be converted to
+                    an IPv4 or IPv6 address (e.g.192.46.3.2,
+                    2001:0db8:85a3:0000:0000:8a2e:0370:7334).
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Text (Specialized)
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.RegexField(
+                    regex='regular_expression')
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type="text" ...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.TextInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Works just like CharField, but
+                    server-side Django validates the (text) value complies with the
+                    regular expression defined in regex. Note regex can be either a
+                    string that represents a regular expression (e.g. \.com$ for a
+                    string that ends in .com) or a compiled Python regular expression
+                    from Python's re package (e.g. re.compile('\.com$') )
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Text (Specialized)
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.SlugField()
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type="text" ...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.TextInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Works just like CharField, but
+                    server-side Django validates the (text) value can be converted to
+                    slug. In Django a 'slug' is a value that contains only lower case
+                    letters, numbers, underscores and hyphens, which is typically used
+                    to sanitize URLs and file names (e.g. the slug representation of
+                    'What is a Slug ?! A sanitized-string' is
+                    what-is-a-slug-a-sanitized-string.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Text (Specialized)
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.URLField()
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type="url" ...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.URLInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Generates HTML url input markup.
+                    Note this HTML5 markup is for client-side url validation and only
+                    works if the browser supports HTML5. If a browser doesn't support
+                    HTML5 then it treats this markup as regular text input. Django
+                    server-side form validation is done for a url irrespective of HTML5
+                    support.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Text (Specialized)
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.UUIDField()
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type="text" ...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.TextInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Works just like CharField, but
+                    server-side Django validates the (text) value is convertable to a
+                    UUID (Universally unique identifier).
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Text (Specialized)
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.ComboField(fields=[field_type1,field_type1])
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type="text" ...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.TextInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Works just like CharField, but
+                    server-side Django enforces the data pass rules for a list of
+                    Django form fields
+                    (e.g.ComboField(fields=[CharField(max_length=50), SlugField()])
+                    enforces the data be a slug field with a maximum length of 50
+                    characters)
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Text (Specialized)
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.MultiValueField(fields=[field_type1,field_type1])
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    <em>
+                        Varies depending on field
+                        list (e.g. for three CharField :
+                        <code>
+                            &lt;input type="text"
+                            ...&gt;&lt;input type="text" ...&gt;&lt;input type="text" ...&gt;;
+                            for two CharField: &lt;input type="text" ...&gt;&lt;input
+                            type="text" ...&gt;
+                        </code>
+                    </em>
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.TextInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Designed to create custom form
+                    fields made up of multiple pre-exisiting form fields (e.g. Social
+                    Security form field made up of three CharField()). It requires a
+                    subclass implementation (e.g. class
+                    SocialSecurityField(MultiValueField):) to include the base form
+                    fields and validation logic of the new field.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Text (Specialized) / Files
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.FilePathField(
+                    path='directory')
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;select &gt;
+ &lt;option value="directory/file_1"&gt;
+   file_1
+  &lt;/option&gt;
+ &lt;option value="directory/file_2"&gt;
+   file_2
+ &lt;/option&gt;
+ &lt;option value="directory/file_3"&gt;
+   file_3
+ &lt;/option&gt;
+&lt;/select&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.Select()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Generates an HTML select list
+                    from files located on a server-side path directory. Note value is
+                    composed of path+filename and just displays filename
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Files
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.FileField()
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type="file" ...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.ClearableFileInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Generates HTML file input markup
+                    so an end user is able to select a file through his web browser. In
+                    addition, it provides various utilities to handle post-processing
+                    of files
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Files (Specialized)
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.ImageField()
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type="file" ...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.ClearableFileInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Generates HTML file input markup
+                    so an end user is able to select an image file through his web
+                    browser. Works just like FileField but provides additional
+                    utilities to handle post-processing of images using the Pillow
+                    package. Note this field forces you to install Pillow (e.g. pip
+                    install Pillow).
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Date/time
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.DateField()
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type="text" ...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.DateInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Works just like CharField, but
+                    server-side Django validates the (text) value can be converted to a
+                    datetime.date, datetime.datetime or string formatted in a
+                    particular date format (e.g. 2017-12-25, 11/25/17).
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Date/time
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.TimeField()
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type="text" ...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.TextInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Works just like CharField, but
+                    server-side Django validates the (text) value can be converted to a
+                    datetime.time or string formatted in a particular time format (e.g.
+                    15:40:33, 17:44).
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Date/time
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.DateTimeField()
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type="text" ...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.DateTimeInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Works just like CharField, but
+                    server-side Django validates the (text) value can be converted to a
+                    datetime.datetime, datetime.date or string formatted in a
+                    particular datetime format (e.g. 2017-12-25 14:30:59, 11/25/17
+                    14:30).
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Date/time
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.DurationField()
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type="text" ...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.TextInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Works just like CharField, but
+                    server-side Django validates the (text) value can be converted to a
+                    timedelta. Note Django uses the
+                    django.utils.dateparse.parse_duration() method as a helper, which
+                    means the string must match the format DD HH:MM:SS.uuuuuu (e.g. 2
+                    1:10:20 for a timedelta of 2 days, 1 hour, 10 minutes, 20
+                    seconds).
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Date/time
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.SplitDateTimeField()
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type="text" name="_0"
+...&gt;
+&lt;input type="text" name="_1" ...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.SplitDateTimeWidget
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Works similar to DateTimeField
+                    but generates two separate text inputs for date &amp; time, unlike
+                    DateTimeField which expects a single string with date &amp; time.
+                    Validation wise Django enforces the date input can be converted to
+                    a datetime.date and the time input can be converted to a
+                    datetime.time.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Number
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.IntegerField()
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type="number"
+...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.NumberInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Generates an HTML number input
+                    markup. Note this HTML5 markup is for client-side number validation
+                    and only works if the browser supports HTML5. If a browser doesn't
+                    support HTML5 then it treats this markup as a regular text input.
+                    Django server-side form validation is done for an integer number
+                    irrespective of HTML5 support.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Number
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.DecimalField()
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type="number"
+...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.NumberInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Generates an HTML number input
+                    markup. Note this HTML5 markup is for client-side number validation
+                    and only works if a browser supports HTML5. If a browser doesn't
+                    support HTML5 then it treats this markup as a regular text input.
+                    Django server-side form validation is done for a decimal number
+                    irrespective of HTML5 support.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Number
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.FloatField()
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;input type="number"
+...&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.NumberInput()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Generates an HTML number input
+                    markup. Note this HTML5 markup is for client-side number validation
+                    and only works if a browser supports HTML5. If a browser doesn't
+                    support HTML5 then it treats this markup as a regular text input.
+                    Django server-side form validation is done for a float number
+                    irrespective of HTML5 support.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Predefined values
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.ChoiceField(
+                    choices=tuple_of_tuples)
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;select&gt;
+ &lt;option value="tuple1_1"
+           selected="selected"&gt;
+	  tuple1_2
+ &lt;/option&gt;
+ &lt;option value="tuple_2_1"&gt;
+          tuple_2_2
+ &lt;/option&gt;
+ &lt;option value="tuple_3_1"&gt;
+          tuple_3_2
+ &lt;/option&gt;
+&lt;/select&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.Select()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Generates an HTML select list
+                    from a tuple of tuples defined through choices (e.g.((1,'United
+                    States'),(2,'Canada'),(3,'Mexico'))). Note with ChoiceField if no
+                    value is selected an empty string '' is passed for post-processing
+                    and if a value like '2' is selected a literal string is passed for
+                    post-processing, irrespective of the original data representation.
+                    See TypeChoiceField or clean form methods to override these last
+                    behaviors for empty values and string handling.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Predefined values
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.TypeChoiceField(
+                    choices=tuple_of_tuples, coerce=coerce_function,
+                    empty_value=None)
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;select&gt;
+ &lt;option value="tuple1_1"
+           selected="selected"&gt;
+	   tuple1_2
+ &lt;/option&gt;
+ &lt;option value="tuple_2_1"&gt;
+           tuple_2_2
+ &lt;/option&gt;
+ &lt;option value="tuple_3_1"&gt;
+           tuple_3_2
+ &lt;/option&gt;
+&lt;/select&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.Select()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Works just like ChoiceField but
+                    provides extra post-processing functionality with the coerce and
+                    empty_value arguments. For example, with TypeChoiceField you can
+                    define a different default value with the empty_value arguement
+                    (e.g.empty_value=None) and you can define a coercion method with
+                    the coerce argument so the selected value is converted from its
+                    string representation (e.g. with coerce=int a value like '2' gets
+                    converted to 2 (integer) through the built-in int function).
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Predefined values
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.MultipleChoiceField(
+                    choices=tuple_of_tuples)
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;select multiple='multiple'&gt;
+ &lt;option value="tuple1_1"
+            selected="selected"&gt;
+	    tuple1_2
+ &lt;/option&gt;
+ &lt;option value="tuple_2_1"&gt;
+            tuple_2_2
+ &lt;/option&gt;
+ &lt;option value="tuple_3_1"&gt;
+            tuple_3_2
+ &lt;/option&gt;
+&lt;/select&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.SelectMultiple()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Generates an HTML select list for
+                    multiple values from tuple of tuples defined through choices
+                    (e.g.((1,'United States'),(2,'Canada'),(3,'Mexico'))). It works
+                    just like ChoiceField but allows multiple values to be selected,
+                    which become available as a list in post-processing.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="card-text text-justify">
+                    Predefined values
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.TypedMultipleChoiceField(
+                    choices=tuple_of_tuples, coerce=coerce_function,
+                    empty_value=None)
+                </p>
+            </td>
+            <td>
+      <pre>
+&lt;select multiple='multiple'&gt;
+ &lt;option value="tuple1_1"
+            selected="selected"&gt;
+	    tuple1_2
+ &lt;/option&gt;
+ &lt;option value="tuple_2_1"&gt;
+            tuple_2_2
+ &lt;/option&gt;
+ &lt;option value="tuple_3_1"&gt;
+            tuple_3_2
+ &lt;/option&gt;
+&lt;/select&gt;
+</pre>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    forms.widgets.Select()
+                </p>
+            </td>
+            <td>
+                <p class="card-text text-justify">
+                    Works just like
+                    MultipleChoiceField but provides extra post-processing
+                    functionality with the coerce and empty_value arguments. For
+                    example, with TypedMultipleChoiceField you can define a different
+                    default value with the empty_value argument (e.g.empty_value=None)
+                    and you can define a coercion method with the coerce argument so
+                    the selected value is converted from its string representation
+                    (e.g. with coerce=int a value like '2' gets converted to 2
+                    (integer) through the built-in int function).
+                </p>
+            </td>
+        </tr>
+    </table>
+    <p class="card-text text-justify">
+        As you can see in table 6-2, the
+        Django form fields provided out-of-the-box support the generation
+        of practically every HTML form input in existence, as well as
+        provide the necessary server-side validation for a wide array of
+        data types. For example, you can use the
+        <code>
+            CharField()
+        </code>
+        form field type to capture standard text or the more specialized
+        <code>
+            EmailField()
+        </code>
+        form field type to ensure the captured
+        value is a valid email. Just as you can use
+        <code>
+            ChoiceField()
+        </code>
+        to generate a form list with predefined
+        values or
+        <code>
+            DateField()
+        </code>
+        to enforce a form value is a
+        valid date.
+    </p>
+    <a id="relationship">
+    </a>
+    <h2>
+        The relationship between widgets and form fields
+    </h2>
+    <p class="card-text text-justify">
+        In
+        <a href="#table-6-2">
+            table 6-2
+        </a>
+        you can see that
+        besides the actual Django form field syntax (e.g.
+        <code>
+            forms.CharField()
+        </code>
+        ,
+        <code>
+            forms.ImageField()
+        </code>
+        )
+        each form field is associated with a default
+        <em>
+            widget
+        </em>
+        .
+        Django widgets for the most part go unnoticed and are often mixed
+        together with the functionality of a form field itself (e.g. if you
+        want an HTML text input
+        <code>
+            &lt;input type="text"..&gt;
+        </code>
+        you use
+        <code>
+            forms.CharField()
+        </code>
+        ). However, when you require
+        changes to the HTML produced by a form field or the way a form
+        field's data is initially processed, you'll need to work with
+        widgets.
+    </p>
+    <p class="card-text text-justify">
+        To make matters a little more
+        confusing, there are many options you specify on form fields that
+        end up being used as part of a widget. For example, the form field
+        <code>
+            forms.CharField(max_length=25)
+        </code>
+        tells Django to limit a
+        value to a maximum of 25 characters upon processing, but this same
+        <code>
+            max_length
+        </code>
+        option is passed to the
+        <code>
+            forms.widgets.TextInput()
+        </code>
+        widget to generate the HTML
+        <code>
+            &lt;input type="text" maxlength="25"...&gt;
+        </code>
+        to enforce
+        the same rule on the browser via the HTML
+        <code>
+            maxlength="25"
+        </code>
+        attribute. So in this case, you can
+        actually change the HTML output through a form field option,
+        without even knowing about widgets!
+    </p>
+    <p class="card-text text-justify">
+        So do you really need to work
+        with widgets to change the HTML produced by a form field ? The
+        answer is it depends. A lot of form fields options are
+        automatically passed to a widget behind the scenes in effect
+        altering the generated HTML, but make no mistake about it, it's a
+        widget that's tasked with generating the HTML and not a form field.
+        For cases when a form field's options can't achieve a desired HTML
+        output, then it becomes necessary to change a form field's widget
+        to achieve a custom HTML output.
+    </p>
+    <p class="card-text text-justify">
+        In upcoming sections in this
+        chapter, I'll expand on the topic of Django widgets and describe
+        <a href="/django/formcustomfieldsandwidgets.html">
+            how to override and customize a Django form field's default widget
+        </a>
+        .
+        Now that you know about the existence of Django widgets and their
+        relationship with Django form fields, I'll continue on the topic of
+        Django form fields and explain the various Django form field
+        options and their validation behavior.
+    </p>
+    <a id="hidden-built-in-widgets">
+    </a>
+    <div class="card mb-2 mt-2">
+        <div class="card-header text-center">
+            Django 'hidden' built-in widgets
+        </div>
+        <div class="card-body">
+            <blockquote class="card-blockquote text-justify">
+                <a href="#table-6-2">
+                    Table 6-2
+                </a>
+                shows
+                all the built-in form fields in Django, which can mislead you to
+                believe the same table also shows all Django built-in form widgets.
+                This is not the case. The widget column in table 6-2 only shows the
+                default widgets assigned to all built-in form fields. There are a
+                few more Django built-in widgets you can use that are also included
+                in the forms.widgets. package:
+                <ul>
+                    <li>
+                        PasswordInput.- Widget for password field (e.g. displays ****
+                        as a user types text). Also supports re-display of a field value
+                        after validation error.
+                    </li>
+                    <li>
+                        HiddenInput.- Widget for hidden field (e.g.
+                        &lt;input type='hidden'...&gt;
+                    </li>
+                    <li>
+                        MultipleHiddenInput.- Like HiddenInput but for multiple values (i.e. a list).
+                    </li>
+                    <li>
+                        Textarea.- Widget
+                        for text area field (e.g.&lt;textarea&gt;&lt;/textarea&gt;).
+                    </li>
+                    <li>
+                        RadioSelect.- Like the Select widget, but generates a list of radio buttons (e.g.
+                        &lt;ul&gt;&lt;li&gt;&lt;input type="radio"&gt;&lt;/li&gt;..
+                        &lt;/ul&gt;)
+                    </li>
+                    <li>
+                        CheckboxSelectMultiple.- Like the SelectMultiple
+                        widget, but generates a list of checkboxes (e.g.
+                        &lt;ul&gt;&lt;li&gt;&lt;input type="checkbox"&gt;&lt;/li&gt;..
+                        &lt;/ul&gt;)
+                    </li>
+                    <li>
+                        TimeInput.- Like the DateTimeInput widget, but for time
+                        input only (e.g. 13:54, 13:54:59)
+                    </li>
+                    <li>
+                        SelectDateWidget.- Widget to
+                        generate three Select widgets for date (e.g. select widget for day,
+                        select widget for month, select widget for
+                        year).
+                    </li>
+                    <li>
+                        SplitHiddenDateTimeWidget.- Like the SplitDateTimeWidget
+                        widget, but uses Hidden input for date and time.
+                    </li>
+                    <li>
+                        FileInput.- Like the ClearableFileInput widget, but without a checkbox input to
+                        clear the field's value.
+                    </li>
+                </ul>
+                <p class="card-text text-justify">
+                    Future sections in this chapter
+                    which describe a
+                    <a href="/django/formcustomfieldsandwidgets.html">
+                        form field's widget argument and how to customize
+                        Django widgets
+                    </a>
+                    , provide more context on how and when to use these additional built-in widgets.
+                </p>
+            </blockquote>
+        </div>
+    </div>
+    <h2>
+        Empty, default and predetermined values: required, initial and
+        choices.
+    </h2>
+    <p class="card-text text-justify">
+        By default, all Django form
+        fields are marked as required which means every field must contain
+        a value to pass validation. The
+        <code>
+            required
+        </code>
+        argument is
+        valid on all Django form fields described in
+        <a href="#table-6-2">
+            table 6-2
+        </a>
+        and in
+        addition to enforcing a value is not empty on the server-side, the
+        HTML 5
+        <code>
+            required
+        </code>
+        attribute is also assigned to a form
+        field so a user's browser also enforce validation.
+    </p>
+    <div class="card border-success mb-3 text-center">
+        <div class="card-body">
+            <blockquote class="card-blockquote text-justify">
+                <strong>
+                    Tip
+                </strong>
+                You can initialize a form with
+                use_required_field=False to forgo the use of the HTML 5 required
+                attribute. See the previous sub-section entitled
+                <a href="/django/formprocessing.html#initialize">
+                    'Initialize
+                    forms'
+                </a>
+                .
+            </blockquote>
+        </div>
+    </div>
+    <p class="card-text text-justify">
+        If you want to allow a field
+        value to be left empty --
+        <code>
+            None
+        </code>
+        or empty string
+        <code>
+            ''
+        </code>
+        -- then a field must be assigned the
+        <code>
+            required=False
+        </code>
+        argument.
+    </p>
+    <p class="card-text text-justify">
+        You can also assign a default
+        value to a field through the
+        <code>
+            initial
+        </code>
+        argument. The
+        initial argument is equally valid across all Django form fields
+        described in
+        <a href="#table-6-2">
+            table 6-2
+        </a>
+        and is described in detail in the previous
+        sub-section 'Initialize forms'.
+    </p>
+    <p class="card-text text-justify">
+        For cases in which you don't want
+        to allow a user the ability to introduce open-ended values for a
+        field you can restrict a field's values to a predetermined set of
+        values through the
+        <code>
+            choices
+        </code>
+        argument. If you want to
+        use the
+        <code>
+            choices
+        </code>
+        attribute you must use a form field
+        data type designed to generate an HTML
+        <code>
+            &lt;select&gt;
+        </code>
+        list such as
+        <code>
+            forms.ChoiceField()
+        </code>
+        ,
+        <code>
+            forms.MultipleChoiceField
+        </code>
+        or
+        <code>
+            forms.FielPathField()
+        </code>
+        . The
+        <code>
+            choices
+        </code>
+        argument cannot be used on data types like
+        <code>
+            forms.CharField()
+        </code>
+        designed for open-ended input.
+    </p>
+    <h2>
+        Limiting text values: max_length, min_length, strip and
+        validators
+    </h2>
+    <p class="card-text text-justify">
+        Form field data types that accept
+        text such as
+        <code>
+            CharField()
+        </code>
+        ,
+        <code>
+            EmailField()
+        </code>
+        and others described in
+        <a href="#table-6-2">
+            table 6-2
+        </a>
+        , can accept both the
+        <code>
+            max_length
+        </code>
+        and
+        <code>
+            min_length
+        </code>
+        arguments to
+        restrict a field's value to a maximum and minimum character length,
+        respectively.
+    </p>
+    <p class="card-text text-justify">
+        The
+        <code>
+            strip
+        </code>
+        argument
+        is used to apply Python's
+        <code>
+            strip()
+        </code>
+        method -- which
+        strips all trailing and leading whitespace -- to a field's value.
+        The
+        <code>
+            strip
+        </code>
+        argument can only be used on two Django
+        field data types,
+        <code>
+            CharField()
+        </code>
+        which defaults to
+        <code>
+            strip=True
+        </code>
+        and
+        <code>
+            RegexField()
+        </code>
+        which
+        defaults to
+        <code>
+            strip=False
+        </code>
+        .
+    </p>
+    <p class="card-text text-justify">
+        To apply more advanced limitation
+        rules on fields that accept text values, see the previous
+        sub-section on
+        <a href="/django/formprocessing.html#validation">
+            'Validating form values'
+        </a>
+        which describes
+        <code>
+            validators
+        </code>
+        and other techniques to limit field
+        values.
+    </p>
+    <h2>
+        Limiting number values: max_value, min_value, max_digits,
+        decimal_places and validators.
+    </h2>
+    <p class="card-text text-justify">
+        Form field data types that accept
+        numbers such as
+        <code>
+            IntegerField()
+        </code>
+        ,
+        <code>
+            DecimalField()
+        </code>
+        and
+        <code>
+            FloatField()
+        </code>
+        can
+        accept both the
+        <code>
+            max_value
+        </code>
+        and
+        <code>
+            min_value
+        </code>
+        arguments to restrict the upper and lower bounds of field's number
+        value, respectively.
+    </p>
+    <p class="card-text text-justify">
+        In addition, the
+        <code>
+            DecimalField()
+        </code>
+        data type which accepts more elaborate
+        number types can use the
+        <code>
+            max_digits
+        </code>
+        argument to
+        restrict the maximum number of digits in a value or the
+        <code>
+            decimal_places
+        </code>
+        argument to specify the maximum number
+        of decimal places in a value.
+    </p>
+    <p class="card-text text-justify">
+        To apply more advanced limitation
+        rules on fields that accept number values, see the previous
+        sub-section on
+        <a href="/django/formprocessing.html#validation">
+            'Validating form values'
+        </a>
+        which describes
+        <code>
+            validators
+        </code>
+        and other techniques to limit field
+        values.
+    </p>
+    <a id="error-messages">
+    </a>
+    <h2>
+        Error messages: error_messages
+    </h2>
+    <p class="card-text text-justify">
+        Every Django field data type has
+        built-in error messages. For example, when a field data type is
+        <code>
+            required
+        </code>
+        and no value is added by a user, Django
+        assigns the error message
+        <code>
+            This field is required
+        </code>
+        to
+        the field, as part of a form's
+        <code>
+            errors
+        </code>
+        dictionary.
+        Similarly, if a field data type uses the
+        <code>
+            max_length
+        </code>
+        argument and the value provided by a user exceeds this threshold,
+        Django creates the error message
+        <code>
+            Ensure this value has at
+            most X characters (it has X)
+        </code>
+        .
+    </p>
+    <p class="card-text text-justify">
+        As described earlier in
+        <a href="/django/formprocessing.html#listing-6-18">
+            listing
+            6-18
+        </a>
+        , Django error messages are typically given a message error
+        code in addition to the error message itself. And it's these
+        message error codes which are used to assign custom messages via
+        the
+        <code>
+            error_messages
+        </code>
+        argument.
+    </p>
+    <p class="card-text text-justify">
+        The
+        <code>
+            error_messages
+        </code>
+        argument expects a dictionary where each key is the message error
+        code and its value a custom error message. For example, to provide
+        a custom message for the
+        <code>
+            required
+        </code>
+        code you would use
+        the syntax
+        <code>
+            forms.CharField(error_messages={"required":"Please, pretty
+            please provide a comment"})
+        </code>
+        .Similarly, if you expect a form
+        field to violate its
+        <code>
+            max_length
+        </code>
+        value, you would
+        assign a custom error message through the
+        <code>
+            max_length
+        </code>
+        code (e.g.
+        <code>
+            error_messages={"max_length":"This value exceeds
+            its max length value"}
+        </code>
+        ).
+    </p>
+    <p class="card-text text-justify">
+        Error codes generally map
+        directly to the rule they violate (e.g. if a
+        <code>
+            forms.IntegerField
+        </code>
+        violates its
+        <code>
+            max_value
+        </code>
+        , Django uses the
+        <code>
+            max_value
+        </code>
+        code
+        to assign a default error message, which you can override by using
+        this code). However, there are over two dozen built-in error
+        message codes (e.g.
+        <code>
+            'missing'
+        </code>
+        ,
+        <code>
+            'contradiction'
+        </code>
+        ) some of which are not too obvious.
+        For example, a
+        <code>
+            forms.ImageField
+        </code>
+        can generate the error
+        message
+        <code>
+            'Upload a valid image. The file you uploaded was
+            either not an image or a corrupted image.'
+        </code>
+        , which uses the
+        <code>
+            'invalid_image'
+        </code>
+        error code, meaning that to override
+        this default error message you would need to know the error code
+        beforehand to declare it as part of
+        <code>
+            error_messages
+        </code>
+        .
+    </p>
+    <p class="card-text text-justify">
+        For the most part, customizing
+        error messages for some of the more esoteric error codes is rarely
+        needed. But if you're having trouble customizing error messages for
+        a given field because you can't determine its error code,
+        <a href="/django/setupdjangologging.html">
+            a little
+            logging
+        </a>
+        debugging on a form errors dictionary (e.g.
+        <code>
+            form.errors.as_json()
+        </code>
+        or some of the other methods in
+        <a href="/django/formprocessing.html#table-6-1">
+            table 6-1
+        </a>
+        ) can quickly net you a form's error codes to override the
+        messages with the
+        <code>
+            error_messages
+        </code>
+        argument.
+    </p>
+    <a id="fieldlayout">
+    </a>
+    <h2>
+        Field layout values: label, label_suffix, help_text
+    </h2>
+    <p class="card-text text-justify">
+        When you output a form field in a
+        template besides the essential HTML form field markup (e.g.
+        <code>
+            &lt;input type="text"&gt;
+        </code>
+        ) it's almost always
+        accompanied by a human-friendly descriptor to indicate what a field
+        is for (e.g.
+        <code>
+            Email: &lt;input type="text"&gt;
+        </code>
+        ). This
+        human-friendly descriptor is called a label and by default in
+        Django it's assigned the same value as the field name.
+    </p>
+    <p class="card-text text-justify">
+        To customize a form field's label
+        you can use the
+        <code>
+            label
+        </code>
+        argument. For example, to
+        provide a more descriptive label for a field named email you can
+        use the syntax
+        <code>
+            email = EmailField(label="Please provide your
+            email")
+        </code>
+        . By default, all labels on a form are accompanied by
+        the
+        <code>
+            :
+        </code>
+        symbol which functions as a suffix. You can
+        further customize the output of field labels with the
+        <code>
+            label_suffix
+        </code>
+        argument on individual form fields or the
+        form instance itself.
+    </p>
+    <p class="card-text text-justify">
+        For example, the syntax
+        <code>
+            email = EmailField(label_suffix='--&gt;')
+        </code>
+        overrides
+        the default suffix label on the email field for the
+        <code>
+            --&gt;
+        </code>
+        symbol.
+    </p>
+    <div class="card border-success mb-3 text-center">
+        <div class="card-body">
+            <blockquote class="card-blockquote text-justify">
+                <strong>
+                    Tip
+                </strong>
+                The label_suffix can also be used to
+                initialize a form (e.g.
+                <code>
+                    form =
+                    ContactForm(label_suffix='--&gt;')
+                </code>
+                ) so all fields receive a
+                label suffix, instead of doing it field by field. See the
+                <a href="/django/formprocessing.html#initialize">
+                    'Initialize forms'
+                </a>
+                section earlier for more details.
+            </blockquote>
+        </div>
+    </div>
+    <p class="card-text text-justify">
+        In certain circumstances it can
+        be helpful to add more explicit instructions to a form field, for
+        such cases you can use the
+        <code>
+            help_text
+        </code>
+        argument.
+        Depending on the template layout you use, the
+        <code>
+            help_text
+        </code>
+        value is added right next to the HTML form
+        field markup.
+    </p>
+    <p class="card-text text-justify">
+        For example, the syntax
+        <code>
+            comment = CharField(help_text="Please be as specific as
+            possible to receive a quick response")
+        </code>
+        generates the given
+        <code>
+            html_text
+        </code>
+        value right next to the
+        <code>
+            comment
+        </code>
+        input field (e.g.
+        <code>
+            Please be as specific as possible to
+            receive a quick response &lt;input type="text"&gt;
+        </code>
+        ). The
+        next section
+        <a href="/django/formtemplatelayout.html">
+            'Set up the layout for Django forms in templates'
+        </a>
+        goes
+        into greater detail on the use of
+        <code>
+            help_text
+        </code>
+        and other
+        form layout properties.
+    </p>
+</main>
+<div class="col-12 col-md-3 col-md-pull-3 d-none d-md-block p-l-0 p-r-0 collapse show" id="sidebar">
+    <div class="list-group panel" id="navigation">
+        <a class="list-group-item" data-parent="#sidebar" href="/">
+            <i class="fa fa-home">
+            </i>
+            <span>
+      Homepage
+     </span>
+        </a>
+        <a class="list-group-item" data-parent="#sidebar" href="/about/danielrubio/articles.html">
+            <i class="fa fa-pencil">
+            </i>
+            <span>
+      All books and articles
+     </span>
+        </a>
+        <a class="list-group-item active" data-parent="#sidebar" href="/django/subscription.html">
+            <h5>
+                <i class="fa fa-book">
+                </i>
+                <span>
+       Lifetime subscription to Django book
+       <br/>
+       Skip the ads + get the video version!
+       <br/>
+       <div class="col-12 mx-auto text-center">
+       </div>
+      </span>
+            </h5>
+        </a>
+        <script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4639088530133416">
+        </script>
+        <ins class="adsbygoogle" data-ad-client="ca-pub-4639088530133416" data-ad-format="auto" data-ad-slot="5988496453" data-full-width-responsive="true" style="display:block">
+        </ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        <a class="list-group-item" data-parent="#sidebar" href="/django/">
+            <i class="fa fa-home">
+            </i>
+            <span>
+      Beginning Django
+     </span>
+        </a>
+        <a aria-expanded="false" class="list-group-item" data-toggle="collapse" href="#ch1">
+            <i class="fa arrow">
+            </i>
+            <span>
+      Introduction to the Django framework
+     </span>
+        </a>
+        <div class="collapse" id="ch1">
+            <a class="list-group-item" data-parent="#ch1" href="/django/designprinciples.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django design principles
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch1" href="/django/installdjango.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Install Django
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch1" href="/django/startdjangoproject.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Start a Django project
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch1" href="/django/setupdjangodatabase.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Set up a database for a Django project
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch1" href="/django/setupdjangocontent.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Set up content in Django: Understand urls, templates and apps
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch1" href="/django/setupdjangoadminsite.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Set up the Django admin site
+      </span>
+            </a>
+        </div>
+        <a aria-expanded="false" class="list-group-item" data-toggle="collapse" href="#ch2">
+            <i class="fa arrow">
+            </i>
+            <span>
+      Django urls &amp; views
+     </span>
+        </a>
+        <div class="collapse" id="ch2">
+            <a class="list-group-item" data-parent="#ch2" href="/django/regexpdjangourls.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Url paths &amp; regular expressions
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch2" href="/django/accessurlparamstemplates.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Url parameters, extra options &amp; query strings
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch2" href="/django/consolidatedjangourls.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Url consolidation and modularization
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch2" href="/django/namedjangourls.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Url naming and namespaces
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch2" href="/django/viewmethodrequests.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       View method requests
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch2" href="/django/viewmethodresponses.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       View method responses
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch2" href="/django/middlewaredjango.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       View method middleware
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch2" href="/django/setupdjangomessages.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Middleware flash messages in view methods
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch2" href="/django/classbasedviews.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Class-based views
+      </span>
+            </a>
+        </div>
+        <a aria-expanded="false" class="list-group-item" data-toggle="collapse" href="#ch3">
+            <i class="fa arrow">
+            </i>
+            <span>
+      Django templates
+     </span>
+        </a>
+        <div class="collapse" id="ch3">
+            <a class="list-group-item" data-parent="#ch3" href="/django/templatesyntax.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django template syntax
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch3" href="/django/customizedjangotemplates.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django template configuration
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch3" href="/django/createreusabledjangotemplates.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Create reusable Django templates
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch3" href="/django/usedefaultdjangocontextprocessors.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Built-in Django context processors
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch3" href="/django/setupdjangocontextprocessors.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Custom Django context processors
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch3" href="/django/usebuiltindjangofilters.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Built-in Django filters
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch3" href="/django/usebuiltindjangotags.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Built-in Django tags
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch3" href="/django/createcustomdjangofilters.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Custom Django filters for Django templates
+      </span>
+            </a>
+        </div>
+        <a aria-expanded="false" class="list-group-item" data-toggle="collapse" href="#ch4">
+            <i class="fa arrow">
+            </i>
+            <span>
+      Jinja templates in Django
+     </span>
+        </a>
+        <div class="collapse" id="ch4">
+            <a class="list-group-item" data-parent="#ch4" href="/django/usejinjatemplatesindjango.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Jinja advantages &amp; disadvantages
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch4" href="/django/transitiontojinjatemplates.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Transition to Jinja templates from Django templates
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch4" href="/django/jinjaconfiguration.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Jinja template configuration in Django
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch4" href="/django/createreusablejinjatemplates.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Create reusable Jinja templates
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch4" href="/django/setupjinjadataforalltemplates.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Jinja globals: Access data on all Jinja templates, like Django context processors
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch4" href="/django/usebuiltinjinjastatements.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Jinja built-in statements/tags and functions (like Django template tags)
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch4" href="/django/usebuiltinjinjafilters.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Jinja built-in filters &amp; tests (like Django filters)
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch4" href="/django/jinjacustomfiltersandtests.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Custom filters &amp; tests in Jinja
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch4" href="/django/useandcreatejinjaextensions.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Jinja extensions
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch4" href="/django/jinjapolicies.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Jinja policies
+      </span>
+            </a>
+        </div>
+        <a aria-expanded="false" class="list-group-item" data-toggle="collapse" href="#ch5">
+            <i class="fa arrow">
+            </i>
+            <span>
+      Django application management
+     </span>
+        </a>
+        <div class="collapse" id="ch5">
+            <a class="list-group-item" data-parent="#ch5" href="/django/configuredjangosettings.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django settings.py for the real world
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch5" href="/django/setupdjangoxsgiserver.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Set up Django on a WSGI/ASGI server
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch5" href="/django/setupstaticdjangowebpageresources.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Set up static web page resources -- Images, CSS, JavaScript
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch5" href="/django/setupdjangologging.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django logging
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch5" href="/django/setupdjangoemail.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django email service
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch5" href="/django/debugdjangoapps.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Debug Django applications
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch5" href="/django/managementcommands.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django management commands
+      </span>
+            </a>
+        </div>
+        <a aria-expanded="false" class="list-group-item" data-toggle="collapse" href="#ch6">
+            <i class="fa arrow">
+            </i>
+            <span>
+      Django forms
+     </span>
+        </a>
+        <div class="collapse" id="ch6">
+            <a class="list-group-item" data-parent="#ch6" href="/django/setupdjangoforms.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django form structure and workflow
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch6" href="/django/formprocessing.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django form processing: Initialization, field access, validation and error handling
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch6" href="/django/formfieldtypesandvalidation.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django form field types: Widgets, options and validations
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch6" href="/django/formtemplatelayout.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Set up the layout for Django forms in templates
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch6" href="/django/formcustomfieldsandwidgets.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django custom form fields and widgets
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch6" href="/django/formadvancedprocessing.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django advanced form processing: Partial forms, AJAX and files
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch6" href="/django/formsets.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django formsets
+      </span>
+            </a>
+        </div>
+        <a aria-expanded="false" class="list-group-item" data-toggle="collapse" href="#ch7">
+            <i class="fa arrow">
+            </i>
+            <span>
+      Django models
+     </span>
+        </a>
+        <div class="collapse" id="ch7">
+            <a class="list-group-item" data-parent="#ch7" href="/django/setupdjangomodels.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django models and the migrations workflow
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch7" href="/django/modeldatatypesandvalidation.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django model data types
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch7" href="/django/modelmethodsandmetaoptions.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django model default and custom behaviors
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch7" href="/django/setuprelationshipsdjangomodels.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Relationships in Django models
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch7" href="/django/modeltransactions.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django model transactions
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch7" href="/django/modelmigrations.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django model migrations
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch7" href="/django/modeldatabasetasks.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django model database tasks
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch7" href="/django/setupinitialdatadjangomodels.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django model initial data set up
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch7" href="/django/modelsignals.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django model signals
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch7" href="/django/modelsoutsidemodels.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django models outside of models.py
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch7" href="/django/modelmultidatabases.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django models and multiple databases
+      </span>
+            </a>
+        </div>
+        <a aria-expanded="false" class="list-group-item" data-toggle="collapse" href="#ch8">
+            <i class="fa arrow">
+            </i>
+            <span>
+      Django model queries and managers
+     </span>
+        </a>
+        <div class="collapse" id="ch8">
+            <a class="list-group-item" data-parent="#ch8" href="/django/singlemodelrecords.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       CRUD single records in Django models
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch8" href="/django/multiplemodelrecords.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       CRUD multiple records in Django models
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch8" href="/django/relationshipmodelrecords.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       CRUD relationship records across Django models
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch8" href="/django/modelqueriesbysql.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Model queries by SQL keyword
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch8" href="/django/modelquerieswithrawsql.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Model queries with raw (open-ended) SQL
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch8" href="/django/modelmanagers.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Model managers
+      </span>
+            </a>
+        </div>
+        <a aria-expanded="false" class="list-group-item" data-toggle="collapse" href="#ch9">
+            <i class="fa arrow">
+            </i>
+            <span>
+      Django model forms &amp; class views
+     </span>
+        </a>
+        <div class="collapse" id="ch9">
+            <a class="list-group-item" data-parent="#ch9" href="/django/modelforms.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django model form structure, options and field mapping
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch9" href="/django/modelformrelationships.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django model forms with relationships
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch9" href="/django/modelformprocessing.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django model form processing
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch9" href="/django/modelformsets.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django model formsets
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch9" href="/django/modelclassbasedviews.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Class-based views with models
+      </span>
+            </a>
+        </div>
+        <a aria-expanded="false" class="list-group-item" data-toggle="collapse" href="#ch10">
+            <i class="fa arrow">
+            </i>
+            <span>
+      Django user management
+     </span>
+        </a>
+        <div class="collapse" id="ch10">
+            <a class="list-group-item" data-parent="#ch10" href="/django/setupdjangousers.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Introduction to the Django user system
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch10" href="/django/permissionchecks.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Permission checks and enforcement
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch10" href="/django/setupdjangousercreation.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       User authentication and auto-management
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch10" href="/django/customusermodel.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Custom User model fields
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch10" href="/django/customauthbackend.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Custom authentication back-ends
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch10" href="/django/usermanagementallauth.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       User management with Django allauth
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch10" href="/django/setupdjangosocialauthentication.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Social authentication with Django allauth
+      </span>
+            </a>
+        </div>
+        <a aria-expanded="false" class="list-group-item" data-toggle="collapse" href="#ch11">
+            <i class="fa arrow">
+            </i>
+            <span>
+      Django admin management
+     </span>
+        </a>
+        <div class="collapse" id="ch11">
+            <a class="list-group-item" data-parent="#ch11" href="/django/setupdjangomodelsindjangoadmin.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Set up Django models in the Django admin
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch11" href="/django/adminreadrecords.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django admin read record options
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch11" href="/django/admincreateupdatedeleterecords.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django admin create, update, delete record options
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch11" href="/django/admincustomlayout.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django admin custom page layout, data &amp; behaviors
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch11" href="/django/adminpermissions.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django admin CRUD permissions
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch11" href="/django/adminmultiplesites.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Multiple Django admin sites
+      </span>
+            </a>
+        </div>
+        <a aria-expanded="false" class="list-group-item" data-toggle="collapse" href="#ch12">
+            <i class="fa arrow">
+            </i>
+            <span>
+      REST services with Django
+     </span>
+        </a>
+        <div class="collapse" id="ch12">
+            <a class="list-group-item" data-parent="#ch12" href="/django/introrestservices.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Introduction to REST services options for Django
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch12" href="/django/introrestframework.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django REST framework concepts and introduction
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch12" href="/django/restframeworksecurity.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django REST framework security
+      </span>
+            </a>
+        </div>
+        <a aria-expanded="false" class="list-group-item" data-toggle="collapse" href="#ch13">
+            <i class="fa arrow">
+            </i>
+            <span>
+      Django i18n, L10n and time zones
+     </span>
+        </a>
+        <div class="collapse" id="ch13">
+            <a class="list-group-item" data-parent="#ch13" href="/django/i18ndefault.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Default Django i18n, L10n &amp; time zone behavior
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch13" href="/django/i18nselectionworkflow.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django language selection workflow
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#ch13" href="/django/i18nlocalemessagebundles.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Django locale message bundles
+      </span>
+            </a>
+        </div>
+        <a aria-expanded="false" class="list-group-item" data-toggle="collapse" href="#ch14">
+            <i class="fa arrow">
+            </i>
+            <span>
+      Django search
+     </span>
+        </a>
+        <div class="collapse" id="ch14">
+            <a class="list-group-item" data-parent="#ch14" href="/django/introsearch.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Introduction to search options for Django
+      </span>
+            </a>
+        </div>
+        <a aria-expanded="false" class="list-group-item" data-toggle="collapse" href="#ch15">
+            <i class="fa arrow">
+            </i>
+            <span>
+      Django async applications
+     </span>
+        </a>
+        <div class="collapse" id="ch15">
+            <a class="list-group-item" data-parent="#ch15" href="/django/introasyncwebapps.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Introduction to async web applications for Python &amp; Django
+      </span>
+            </a>
+        </div>
+        <a aria-expanded="false" class="list-group-item" data-toggle="collapse" href="#appa">
+            <i class="fa arrow">
+            </i>
+            <span>
+      Python basics
+     </span>
+        </a>
+        <div class="collapse" id="appa">
+            <a class="list-group-item" data-parent="#appa" href="/django/pythonbasics-text.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Strings, unicode and other annoying text behaviors
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#appa" href="/django/pythonbasics-methods.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Methods: Default, optional, *args &amp; **kwargs arguments
+      </span>
+                <br/>
+            </a>
+            <a class="list-group-item" data-parent="#appa" href="/django/pythonbasics-classes.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Classes and subclasses
+      </span>
+            </a>
+            <a class="list-group-item" data-parent="#appa" href="/django/pythonbasics-loops.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Loops, iterators and generators
+      </span>
+                <br/>
+            </a>
+            <a class="list-group-item" data-parent="#appa" href="/django/pythonbasics-comprehensions.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       List comprehensions, generator expressions, maps and filters
+      </span>
+                <br/>
+            </a>
+            <a class="list-group-item" data-parent="#appa" href="/django/pythonbasics-lambda.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Lambda keyword for anonymous methods
+      </span>
+                <br/>
+            </a>
+            <a class="list-group-item" data-parent="#appa" href="/django/pythonbasics-asynchronous.html">
+                <i class="fa arrow">
+                </i>
+                <span>
+       Asynchronous behavior: Coroutines, threads, processes, event loops, asyncio, async &amp; await
+      </span>
+            </a>
+        </div>
+        <a class="list-group-item" data-parent="#sidebar" href="https://github.com/drubio/beginningdjango">
+            <i class="fa fa-github">
+            </i>
+            <span>
+      Source code on github
+     </span>
+        </a>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+</body>
+</html>
