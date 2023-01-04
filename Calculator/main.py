@@ -1,6 +1,7 @@
 def get_num():
     num1 = int(input("Enter Num1 -> "))
     num2 = int(input("Enter Num2 -> "))
+    return num1, num2
 
 
 def add(num1, num2):
@@ -21,7 +22,7 @@ def multiply(num1, num2):
 
 print("Hello World! Welcome to MyCalculator")
 loop = 1
-get_num()
+num1, num2 = get_num()
 while loop == 1:
 
     print("1 -> Addition")
@@ -39,4 +40,17 @@ while loop == 1:
         print("Not Valid")
 
     if option == 1:
-        add(num1 = get_num(), num2 = get_num())
+        add(num1, num2)
+    elif option == 2:
+        substract(num1, num2)
+    elif option == 3:
+        multiply(num1, num2)
+    elif option == 4:
+        divide(num1, num2)
+    elif option == 5:
+        num1, num2 = get_num()
+    elif option == 6:
+        print("Thank You for using MyCalculator")
+        loop = 0
+    else:
+        print("Invalid Input")
